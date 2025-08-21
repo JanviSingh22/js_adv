@@ -1,0 +1,39 @@
+<!-- question5 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate IDs</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+<body>
+    <h1>UNIQUE ID GENERATOR</h1>
+    <button onclick="showId()">Generate ID</button>
+
+    <script>
+        // Generator function for unique numeric IDs
+        function* generateUniqueIds() {
+            let id = 1;
+            while (true) {
+                yield id++;
+            }
+        }
+
+        const idGenerator = generateUniqueIds();
+
+        // Function to format number to u001, u002, etc.
+        function formatId(num) {
+            return "U" + String(num).padStart(3, '0');
+        }
+
+        // Function to generate and show the ID
+        function showId() {
+            const rawId = idGenerator.next().value;
+            const formattedId = formatId(rawId);
+            alert("Generated ID: " + formattedId);
+        }
+    </script>
+</body>
+</html>

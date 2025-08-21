@@ -1,0 +1,44 @@
+<!-- question 2 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chennai Weather</title>
+    <style>
+        body {
+
+            padding: 0px;
+            margin: 0px;
+        }
+/* 
+        .weather-card{
+
+
+        } */
+
+    </style>
+</head>
+<body>
+    <h1>Chennai Weather Report</h1>
+
+    <div class = "weather-card">
+        <script>
+            const url = "https://api.open-meteo.com/v1/forecast?latitude=13.0878&longitude=80.2785&current_weather=true";
+            async function fetchWeather(url)
+            {
+
+                const result = await fetch(url);
+                const data = await result.json();
+                return data;
+                
+            }
+            const report = fetchWeather(url);
+            console.log(report);
+
+        </script>
+    </div>
+
+</body>
+</html>
