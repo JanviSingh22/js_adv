@@ -1,11 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f0f2f5;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      width: 250px;
+      text-align: center;
+    }
+    .city {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+    .temp {
+      font-size: 2em;
+      color: #0077ff;
+    }
+    .wind {
+      font-size: 1em;
+      color: #555;
+      margin-top: 8px;
+    }
+  </style>
 </head>
 <body>
-    
+  <h1>🌤️ Weather in Your Favorite Cities</h1>
+  <div class="container" id="weather-container">
+    <!-- Cards will be inserted here -->
+  </div>
+
+  <script>
+    const cities = [
+      { name: 'Kanpur', latitude: 26.4499, longitude: 80.3319 },
+      { name: 'Srinagar (Kashmir)', latitude: 34.0837, longitude: 74.7973 },
+      { name: 'Oslo', latitude: 59.9139, longitude: 10.7522 }
+    ];
+
+    const fetchWeather = async ({ name, latitude, longitude }) => {
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,wind_speed_10m&timezone=auto`;
+
+      const response = await fetch(url);
+      const data = await response.json();
+      const temp = data.current.temperature_2m;
+      const wind = data.current.wind_speed_10m;
+
+      return { name, temp, wind };
+    };
+
+    const loadWeather = async () => {
+      const container = document.getElementById('weather-container');
+      const promises = cities.map(fetchWeather);
+      const results = await Promise.all(promises);
+
+      results.forEach(({ name, temp, wind }) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="city">${name}</div>
+          <div class="temp">${temp}°C</div>
+          <div class="wind">Wind Speed: ${wind} km/h</div>
+        `;
+        container.appendChild(card);
+      });
+    };
+
+    loadWeather();
+  </script>
 </body>
 </html>
