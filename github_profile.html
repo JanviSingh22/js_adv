@@ -65,7 +65,7 @@
   <div class="profile-card" id="profile">
     <p>Loading profile...</p>
   </div>
-
+  <!-- js code -->
   <script>
     const username = 'JanviSingh22'; // 🔁 Replace with your GitHub username
 
@@ -80,7 +80,8 @@
     async function showProfile() {
       try {
         const profile = await fetchGitHubProfile(username);
-        const container = document.getElementById('profile');
+        console.log(profile); // For debugging
+        const container = document.getElementById('profile'); //new stuff
 
         container.innerHTML = `
           <img src="${profile.avatar_url}" alt="Avatar" class="avatar">
